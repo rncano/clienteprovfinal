@@ -1,0 +1,36 @@
+<div class="container p-4 mt-5">
+    <div class="row align-items-center">
+      <div class="col-md-4 mx-auto">
+        <div class="card text-center custom-container" [ngClass]="{'custom-container-highlight': revelar}">
+          <div class="card-header">
+            <h3>Iniciar Sesión</h3>
+          </div>
+          <div class="card-body">
+            <form (submit)="ingresar()" method="post" *ngIf="!revelar">
+              <fieldset>
+                <legend>Ingrese usuario y contraseña</legend>
+                <input (focus)="limpiarUsuario()" type="text" [(ngModel)]="nuevo.nombre" name="nuevo.nombre"
+                placeholder="Usuario" class="form-control custom-input custom-input-usuario" autofocus> <br>
+              
+              <input (focus)="limpiarPassword()" type="password" [(ngModel)]="nuevo.password" name="nuevo.password"
+                placeholder="Contraseña" class="form-control custom-input custom-input custom-input-contraseña" autofocus>
+              
+              <button (click)="validarCampos()" class="btn btn-success custom-button mt-3">Enviar</button>
+              
+
+              </fieldset>
+            </form>
+          </div>
+          <div *ngIf="revelar" class="card-body">
+            <div class="error-message">
+              Usuario y/o Contraseña incorrectos
+            </div>
+            <br><br>
+            <button (click)="reintentar()" class="btn btn-success btn-lg btn-box">Reintentar</button> <br><br>
+            <button (click)="registrarse()" class="btn btn-danger btn-lg btn-box">Registrarse</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

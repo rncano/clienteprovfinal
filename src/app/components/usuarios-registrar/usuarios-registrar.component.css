@@ -1,0 +1,28 @@
+.custom-container {
+    background-color: #0099ff;
+    padding: 20px;
+  }
+  
+  .custom-input {
+    background-color: #63acc9;
+  }
+  
+  .header-title {
+    text-align: center;
+}
+  .error-container {
+    margin-top: 10px;
+  }
+  
+  .error-message {
+    background-color: #ffcccc;
+    color: red;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ff0000;
+  }
+  .form-label {
+    text-align: right;
+    font-weight: bold;
+  }
+  

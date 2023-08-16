@@ -1,0 +1,71 @@
+
+<h1> <b> Provincias Argentinas</b> </h1>
+<br>
+
+<table border="1">
+    <thead>
+        <th class="bg-info">ID</th>
+        <th class="bg-info">Nombre</th>
+        <th class="bg-info">Capital</th>
+        <th class="bg-info">Descripción</th>
+        <th class="bg-info">Imagen de la Provincia</th>
+        
+    </thead>
+    <tbody *ngIf="provincias.length > 0; else fila">
+        <tr *ngFor=" let provincias of provincias">
+            <td class="table-primary">{{provincias.id}}</td>
+            <td class="table-primary">{{provincias.nombre}}</td>
+            <td class="table-primary">{{provincias.capital}}</td>
+            <td class="table-primary">{{provincias.descripcion}}</td>
+            <td class="table-primary"><img [src]="provincias.imagen" alt="Imagen de la prov" align="center" width="275" height="183"> </td> 
+          
+        </tr>
+    </tbody>
+    <!--Tiene que estar a la misma altura que el tbody del ngif, tienen que ser hermanos "Remplaza la spuesta tabla de arriba"-->
+    <ng-template #fila>
+        <tbody>
+            <tr>
+                <td colspan="4">No hay mas filas</td>
+            </tr>
+        </tbody>
+    </ng-template>
+</table>
+
+<br><br>
+
+<!-- //evento submit -- bulding de eventos -->
+
+
+<form (submit)="procesar()" method="post">
+    <fieldset>
+        <legend> <b>Seleccion multiple de Provincias </b>  </legend>
+        <table class="table table-hover" border="2">
+            <thead class="bg-info">
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Capital</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Acción</th>
+            </thead>
+            <tbody *ngIf="provincias.length > 0; else fila">
+                <tr *ngFor=" let provincias of provincias">
+                    <td class="table-info">{{provincias.id}}</td>
+                     <td class="table-info">{{provincias.nombre}}</td>
+                     <td class="table-info">{{provincias.capital}}</td>
+                     <td class="table-info">{{provincias.descripcion}}</td>
+                
+                    <!--OneWayDataBinding procesa lo que selecciona el usuario-->
+                    <td class="table-info"><input  type="checkbox" value="{{provincias.id}}" (click)="addRemoveItem($event)"></td>
+                </tr>
+            </tbody>
+            <ng-template #fila>
+                <tbody>
+                    <tr>
+                        <td colspan="4">No hay mas filas</td>
+                    </tr>
+                </tbody>
+            </ng-template>
+        </table>
+        <button class="btn btn-primary btn-block ">Enviar</button>
+    </fieldset>
+</form>

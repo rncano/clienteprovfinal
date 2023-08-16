@@ -1,0 +1,55 @@
+<div class="container p-4 mt-5">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card custom-container">
+                <div class="card-header text-end">
+                    <h3  class="header-title">Registrarse</h3>
+                </div>
+                <div class="card-body">
+                    <form (submit)="registrar()" method="post">
+                        <div class="form-group">
+                            <label for="nombre" class="form-label text-end fw-bold">Nombre:</label>
+                            <input type="text" name="nombre" [(ngModel)]="user.nombre" (focus)="limpiarNombre()" placeholder="Nombre" id="nombre" class="form-control custom-input custom-input-nombre"> <br>
+                           
+                            <div class="error-message" [ngSwitch]="errorNombre" *ngIf="errorNombreVisible">
+                                <div *ngSwitchCase="1">Debes completar el campo</div>
+                                <div *ngSwitchCase="2">Nombre muy largo</div>
+                                <div *ngSwitchCase="3">Nombre debe ser alfabético</div>
+                            </div>
+                        
+                            <br>
+
+                            <label for="password" class="form-label text-end fw-bold">Contraseña:</label>
+                            <input type="password" name="password" [(ngModel)]="user.password" (focus)="limpiarPassword()" placeholder="Contraseña" id="password" class="form-control custom-input custom-input-password"> <br>
+                            
+                            <div class="error-message" [ngSwitch]="errorPassword" *ngIf="errorPasswordVisible">
+                                <div *ngSwitchCase="1">Debes completar el campo</div>
+                                <div *ngSwitchCase="2">Contraseña muy larga</div>
+                                <div *ngSwitchCase="3">Contraseña debe ser alfanumerica y admite mayusculas, mínimo 5 campos.</div>
+                            </div>    
+                        
+                            <label for="repassword" class="form-label text-end fw-bold">Repetir Contraseña:</label>
+                            <input type="password" name="repassword" [(ngModel)]="user.repassword" (focus)="limpiarRePassword()" placeholder="Repetir Contraseña" id="repassword" class="form-control custom-input custom-input-repassword"> <br>
+                           
+
+                            <div  [ngSwitch]="errorRePassrword">
+                                <div *ngSwitchCase="1">Las contraseñas deben ser iguales</div>
+                            </div>  
+                           
+                            <label for="email" class="form-label text-end fw-bold">Email:</label>
+                            <input type="email" name="email" [(ngModel)]="user.email" (focus)="limpiarEmail()" placeholder="Email" id="email" class="form-control custom-input custom-input-email"> <br>
+                            
+                            <div class="error-message" [ngSwitch]="errorEmail" *ngIf="errorEmailVisible">
+                                <div *ngSwitchCase="1">Debes completar el campo</div>
+                                <div *ngSwitchCase="2">Email muy largo</div>
+                                <div *ngSwitchCase="3">Email debe ser nombre@dominio.algo.</div>
+                            </div>   <br>
+                        
+                            <button class="btn btn-success btn-block" (click)="verificarForm()">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

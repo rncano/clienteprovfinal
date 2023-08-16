@@ -1,0 +1,139 @@
+<table class="table table-primary" border="1">
+    <thead>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Capital</th>
+        <th>Descripción</th>
+        <th>ACCION</th>
+ 
+    </thead>
+    <tbody *ngIf="provincias.length > 0; else fila">
+        <tr *ngFor=" let provincias of provincias">
+            <td>{{provincias.id}}</td>
+            <td>{{provincias.nombre}}</td>
+            <td>{{provincias.capital}}</td>
+            <td>{{provincias.descripcion}}</td>  
+            <td><button class="btn btn-danger" (click)=eliminar($event) value="{{provincias.id}}">Eliminar</button></td>
+        </tr>
+    </tbody>
+    <!--Tiene que estar a la misma altura que el tbody del ngif, tienen que ser hermanos "Remplaza la spuesta tabla de arriba"-->
+    <ng-template #fila>
+        <tbody>
+            <tr>
+                <td colspan="4">No hay mas filas</td>
+            </tr>
+        </tbody>
+    </ng-template>
+</table>
+
+<br><br>
+
+
+<div class="bg-primary" class="row">
+    <div class="col-md-6">
+        <form name="actualizarForm" class="bg-info  my-2" (submit)="actualizar()" method="post">
+         
+            <fieldset class=" my-3 px-4">
+                <!-- INICIO ACTUALIZAR PROVINCIAS-->
+                <legend>Seleccione <b> ID PROVINCIA </b>  para <b> ACTUALIZAR </b></legend>
+        
+                <select  required [(ngModel)]="id_select" name="id_select" (change)="seleccionaValor($event)" >
+                    <!--Esta opcion queda fija por opcion disabled-->
+        
+                    <option class="dropdown-item" disabled selected value="undefined">Seleccione ID PROVINCIA</option>
+        
+                    <option *ngFor="let provincia of provincias" [value]="provincia.id" >{{provincia.id}} </option>
+                </select>
+                <br> <br>
+      
+                <b> <label for="exampleFormControlInput1">Nombre de la Provincia:  </label></b> <br>
+        
+                <input type="text" (focus)="limpiarNombreActualizar()" [(ngModel)]="actual.nombre" name="actual.nombre" placeholder="Nombre Provincia"> <br> <br>
+              
+                  <b> <label for="exampleFormControlInput1">Capital de la Provincia:  </label></b> <br>
+                <input type="text" (focus)="limpiarCapitalActualizar()"  [(ngModel)]="actual.capital" name="actual.capital"  placeholder="Capital"> <br> <br>
+                
+                
+                <b> <label for="exampleFormControlInput1">Descripción de la Provincia:  </label></b> <br>
+                <textarea name="" id="" cols="40" rows="10" (focus)="limpiarDescripcionActualizar()" [(ngModel)]="actual.descripcion" name="actual.descripcion" placeholder="Descripción"></textarea> <br>
+        
+                <button  (click)="validarProvinciaActualizar()"  class="btn btn-success btn-lg custom-btn btn-block">Actualizar</button>
+               
+                 <!-- FIN ACTUALIZAR -->
+            </fieldset>
+        </form>
+     
+        <div>
+            <div  [ngSwitch]="errorNombreActualizar">
+                <div class="card text-white bg-danger mb-3"  *ngSwitchCase="1">Debes completar el nombre de la PROVINCIA</div>
+                <div class="card text-white bg-danger mb-3"  *ngSwitchCase="2">Nombre muy largo</div>
+                <div class="card text-white bg-danger mb-3"  *ngSwitchCase="3">Nombre debe ser alfabetico y primera letra en MAYUSCULA</div>
+            </div>
+        </div>
+        <div>
+            <div  [ngSwitch]="errorCapitalActualizar">
+                <div class="card text-white bg-danger mb-3"  *ngSwitchCase="1">Debes completar el nombre de la Ciudad</div>
+                <div class="card text-white bg-danger mb-3"  *ngSwitchCase="2">Nombre muy largo CIUDAD </div>
+                <div class="card text-white bg-danger mb-3"  *ngSwitchCase="3">Primera letra en MAYUSCULA CIUDAD</div>
+            </div>
+        </div>
+
+        <div>
+            <div  [ngSwitch]="errorDescripcionActualizar">
+                <div class="card text-white bg-danger mb-3"  *ngSwitchCase="1">Debes completar la descripcion de la Provincia</div>
+                <div class="card text-white bg-danger mb-3"  *ngSwitchCase="2">Descripcion muy largo CIUDAD 250 caracteres maximos</div>
+                <div class="card text-white bg-danger mb-3"  *ngSwitchCase="3">Esta ingresando simbolos no permitidos en  Descripcion</div>
+            </div>
+        </div>
+        
+    </div>
+
+
+    <div class="col-md-6">
+    <!--AGREGAR PROVINCIA-->
+<form class="bg-info  my-3 px-4" (submit)="agregarProvincia()" method="post">
+    <fieldset  class=" my-3 px-4">
+        <!-- INICIO AGREGAR PROVINCIAS-->
+        <legend><b> AGREGAR NUEVA PROVINCIA </b> </legend>
+
+        <b> <label for="exampleFormControlInput1">Nombre de la Provincia:  </label></b> <br>
+
+        <input type="text" (focus)="limpiarNombre()" [(ngModel)]="nuevo.nombre" name="nuevo.nombre" placeholder="Nombre Provincia"> <br> <br>
+        
+        <b> <label  for="exampleFormControlInput1">Capital de la Provincia:  </label></b> <br>
+        <input type="text" (focus)="limpiarCapital()" [(ngModel)]="nuevo.capital" name="nuevo.capital"  placeholder="Capital"> <br> <br>
+        
+        <b> <label for="exampleFormControlInput1">Descripción de la Provincia:  </label></b> <br>
+        <textarea name="" id="" cols="40" rows="10" (focus)="limpiarDescripcion()" [(ngModel)]="nuevo.descripcion" name="nuevo.descripcion" placeholder="Descripción"></textarea> <br>
+        
+        <button (click)="validarProvincia()"    class="btn btn-success btn-lg custom-btn btn-block">Agregar Provincia</button> <br>
+
+         <!-- FIN ACTUALIZAR -->
+    </fieldset>
+</form>
+
+<div>
+    <div  [ngSwitch]="errorNombre">
+		<div class="card text-white bg-danger mb-3"  *ngSwitchCase="1">Debes completar el nombre de la PROVINCIA</div>
+		<div class="card text-white bg-danger mb-3"  *ngSwitchCase="2">Nombre muy largo</div>
+		<div class="card text-white bg-danger mb-3"  *ngSwitchCase="3">Nombre debe ser alfabetico y primera letra en MAYUSCULA</div>
+	</div>
+</div>
+<div>
+    <div  [ngSwitch]="errorCapital">
+		<div class="card text-white bg-danger mb-3"  *ngSwitchCase="1">Debes completar el nombre de la Ciudad</div>
+		<div class="card text-white bg-danger mb-3"  *ngSwitchCase="2">Nombre muy largo</div>
+		<div class="card text-white bg-danger mb-3"  *ngSwitchCase="3">Nombre debe ser alfabetico y primera letra en MAYUSCULA</div>
+	</div>
+</div>
+<div>
+    <div  [ngSwitch]="errorDescripcion">
+        <div class="card text-white bg-danger mb-3"  *ngSwitchCase="1">Debes completar la descripcion de la Provincia</div>
+        <div class="card text-white bg-danger mb-3"  *ngSwitchCase="2">Descripcion muy largo CIUDAD </div>
+        <div class="card text-white bg-danger mb-3"  *ngSwitchCase="3">Esta ingresando simbolos no permitidos en  Descripcion</div>
+    </div>
+</div>
+
+  </div>
+
+  </div>
